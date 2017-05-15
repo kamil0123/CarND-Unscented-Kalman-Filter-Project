@@ -69,10 +69,10 @@ UKF::UKF() {
   lambda_ = 3 - n_aug_;
 
   // predicted sigma points matrix
-  Xsig_pred_ = MatrixXd(n_x_, 2 * n_aug + 1);
+  Xsig_pred_ = MatrixXd(n_x_, 2 * n_aug_ + 1);
 
   // Weights of sigma points
-  weights_ = VectorXd(2 * n_aug + 1);
+  weights_ = VectorXd(2 * n_aug_ + 1);
 
   // the current NIS for radar
   NIS_radar_ = 0.0;
