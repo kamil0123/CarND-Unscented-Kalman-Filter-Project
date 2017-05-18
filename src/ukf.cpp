@@ -106,6 +106,36 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
             0, 0, 1, 0, 0,
             0, 0, 0, 1, 0,
             0, 0, 0, 0, 1;
+
+      if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+
+        // Get data from radar
+        float ro = meas_package.raw_measurements_(0);
+        float phi = meas_package.raw_measurements_(1);
+        float ro_dot = meas_package.raw_measurements_(2);
+
+        // Conver coorgiates from polar to cardesian
+
+        x_(0) = rho * cos(phi); // px
+        x_(1) = rho * sin(phi); // py
+        
+        float vx = rho_dot * cos(phi); // vx
+        float vy = rho_dot * sin(phi); // vy
+
+        x_(2) = sqrt(vx*vx + vy*vy)
+        x_(3) = 0
+        x_(4) = 0
+      } else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+        
+        // Get data from lidar
+        x_(0) = meas_package.raw_measurements_(0);
+        x_(1) = meas_package.raw_measurements_(1);
+        x_(2) = 0;
+        x_(3) = 0;
+        x_(4) = 0;
+      }
+
+      is_initialized_ = true;
     } 
 
 
