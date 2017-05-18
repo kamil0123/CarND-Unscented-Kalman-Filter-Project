@@ -94,6 +94,23 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   Complete this function! Make sure you switch between lidar and radar
   measurements.
   */
+
+  if ((meas_package.sensor_type_ == MeasurementPackage::RADAR && use_radar_) ||
+    (meas_package.sensor_type_ == MeasurementPackage::LASER && use_laser_)) {
+
+
+    if (!is_initialized_) {
+      // Initial covariance matrix
+      P_ << 1, 0, 0, 0, 0,
+            0, 1, 0, 0, 0,
+            0, 0, 1, 0, 0,
+            0, 0, 0, 1, 0,
+            0, 0, 0, 0, 1;
+    } 
+
+
+
+  }
 }
 
 /**
