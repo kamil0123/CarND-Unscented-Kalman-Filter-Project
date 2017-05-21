@@ -156,14 +156,38 @@ void UKF::Prediction(double delta_t) {
   vector, x_. Predict sigma points, the state, and the state covariance matrix.
   */
 
+ /** 
+  * Generate sigma points
+  */
+
+  //set spreading parameter
+  lambda_ = 3 - n_x;
+
+  //create sigma point matrix
+  MatrixXd Xsig = MatrixXd(n_x_, 2 * n_aug_ + 1);
+
+  //calculate square root of P
+  MatrixXd A = P_.llt().matrixL();
+
+  //set first column of sigma point matrix
+  Xsig.col(0)  = x_;
+
+  //set remaining sigma points
+  for (int i = 0; i < n_x_; i++)
+  {
+    Xsig.col(i+1)     = x_ + sqrt(lambda_+n_x_) * A.col(i);
+    Xsig.col(i+1+n_x_) = x_ - sqrt(lambda_+n_x_) * A.col(i);
+  }
+
+  
+
 
 
   /** 
   * Predict sigma points
   */
 
-  //create matrix with predicted sigma points as columns
-  MatrixXd Xsig = MatrixXd(n_x_, 2 * n_aug_ + 1);
+  
 
   for (int i = 0; i< 2*n_aug+1; i++) {
     //extract values for better readability
