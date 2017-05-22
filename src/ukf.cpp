@@ -425,4 +425,10 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
   //update state mean and covariance matrix
   x_ = x_ + K * z_diff;
   P_ = P_ - K*S*K.transpose();
+
+  /**
+  // calculate NIS
+  */
+
+  NIS_radar_ = z_diff.transpose() * S.inverse() * z_diff;
 }
