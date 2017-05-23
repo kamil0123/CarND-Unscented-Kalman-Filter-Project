@@ -4,6 +4,9 @@
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 using std::vector;
+using std::endl;
+using std::cout;
+
 
 Tools::Tools() {}
 
